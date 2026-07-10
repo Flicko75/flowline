@@ -1,4 +1,4 @@
-package com.flowline.workflow_engine;
+package com.flowline.workflow_engine.engine.models;
 
 public class Step {
     private final String name;

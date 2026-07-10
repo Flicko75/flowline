@@ -1,5 +1,9 @@
 package com.flowline.workflow_engine;
 
+import com.flowline.workflow_engine.engine.Engine;
+import com.flowline.workflow_engine.engine.models.Step;
+import com.flowline.workflow_engine.engine.models.WorkflowResult;
+
 import java.util.List;
 
 public class EngineTest {

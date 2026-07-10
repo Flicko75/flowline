@@ -1,4 +1,4 @@
-package com.flowline.workflow_engine;
+package com.flowline.workflow_engine.engine.enums;
 
 public enum StepStatus {
     NOT_STARTED,

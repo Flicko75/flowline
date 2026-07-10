@@ -1,4 +1,8 @@
-package com.flowline.workflow_engine;
+package com.flowline.workflow_engine.engine;
+
+import com.flowline.workflow_engine.engine.models.Step;
+import com.flowline.workflow_engine.engine.enums.StepStatus;
+import com.flowline.workflow_engine.engine.models.WorkflowResult;
 
 import java.util.List;
 import java.util.LinkedHashMap;
