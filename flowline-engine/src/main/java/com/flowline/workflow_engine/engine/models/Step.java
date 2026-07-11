@@ -1,19 +1,11 @@
 package com.flowline.workflow_engine.engine.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public class Step {
     private final String name;
     private final Runnable task;
-
-    public Step(String name, Runnable task) {
-        this.name = name;
-        this.task = task;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Runnable getTask() {
-        return task;
-    }
 }

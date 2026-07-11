@@ -1,18 +1,21 @@
 package com.flowline.workflow_engine.steps;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class HttpRequestStep implements StepDefinition{
     private String name;
     private String url;
-
-    public String getName() {
-        return name;
-    }
 
     public Runnable toRun() {
         return () -> {

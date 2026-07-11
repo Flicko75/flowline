@@ -1,17 +1,20 @@
 package com.flowline.workflow_engine.steps;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class ReadFileStep implements StepDefinition{
     private String name;
     private String path;
-
-    public String getName() {
-        return name;
-    }
 
     public Runnable toRun() {
         return () -> {

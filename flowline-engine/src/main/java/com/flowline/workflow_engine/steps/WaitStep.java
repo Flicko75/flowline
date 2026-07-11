@@ -1,12 +1,15 @@
 package com.flowline.workflow_engine.steps;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
 public class WaitStep implements StepDefinition {
     private String name;
     private int seconds;
-
-    public String getName() {
-        return name;
-    }
 
     public Runnable toRun() {
         return () -> {
