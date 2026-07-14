@@ -1,24 +1,29 @@
 package com.flowline.workflow_ui.ui;
 
 import com.flowline.workflow_ui.client.WorkflowClient;
+import com.flowline.workflow_ui.models.StagedStep;
 import com.flowline.workflow_ui.util.JsonBuilder;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainView {
 
     private final WorkflowClient client = new WorkflowClient();
 
+    private final List<StagedStep> stagedSteps = new ArrayList<>();
+
+    private final ListView<String> stagedStepsListView = new ListView<>();
+
     public void show(Stage stage) {
         ComboBox<String> typeDropdown = new ComboBox<>();
         typeDropdown.getItems().addAll("wait", "http", "file");
-        typeDropdown.setValue("wait");
+        typeDropdown.setPromptText("Select type");
 
         TextField nameField = new TextField();
         nameField.setPromptText("Step name");
@@ -26,19 +31,37 @@ public class MainView {
         TextField valueField = new TextField();
         valueField.setPromptText("Value (seconds / url / file path)");
 
-        Label resutLabel = new Label("Fill the form and click Run");
-        Button button = new Button("Run Workflow");
+        Label resultLabel = new Label("Fill the form and click Run");
+        Button addStepButton = new Button("Add Step");
+        Button runButton = new Button("Run Workflow");
 
-        button.setOnAction(actionEvent -> {
-            String type = typeDropdown.getValue();
-            String name = nameField.getText();
-            String value = valueField.getText();
+        addStepButton.setOnAction(actionEvent -> {
+            stagedSteps.add(new StagedStep(
+                    typeDropdown.getValue(),
+                    nameField.getText(),
+                    valueField.getText()
+            ));
 
-            String json = JsonBuilder.buildSingleStepJson(type, name, value);
-            resutLabel.setText(client.runWorkflow(json));
+            stagedStepsListView.getItems().add(
+                    typeDropdown.getValue() + " - " + nameField.getText() + " - " + valueField.getText()
+            );
+
+            typeDropdown.setValue(null);
+            nameField.clear();
+            valueField.clear();
         });
 
-        VBox root = new VBox(10, typeDropdown, nameField, valueField, button, resutLabel);
+        runButton.setOnAction(actionEvent -> {
+            if (stagedSteps.isEmpty()) {
+                resultLabel.setText("Add at least one step first");
+                return;
+            }
+
+            String json = JsonBuilder.buildStepsJson(stagedSteps);
+            resultLabel.setText(client.runWorkflow(json));
+        });
+
+        VBox root = new VBox(10, typeDropdown, nameField, valueField, addStepButton, stagedStepsListView, runButton, resultLabel);
         root.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(root, 400, 300);
