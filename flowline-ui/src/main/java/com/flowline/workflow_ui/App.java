@@ -10,8 +10,9 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-        new ProgressWebsocketClient().connect();
-        new MainView().show(stage);
+        MainView mainView = new MainView();
+        new ProgressWebsocketClient(mainView).connect();
+        mainView.show(stage);
     }
 
     public static void main(String[] args) {
