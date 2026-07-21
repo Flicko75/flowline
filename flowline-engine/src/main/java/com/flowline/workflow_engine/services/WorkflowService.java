@@ -50,7 +50,13 @@ public class WorkflowService {
         }
 
         Engine engine = new Engine(handler, stepRepository);
-        return engine.run(steps, entities);
+
+        WorkflowResult result =  engine.run(steps, entities);
+        if (result.success()) {
+            stepRepository.deleteAll();
+        }
+
+        return result;
     }
 
 }
